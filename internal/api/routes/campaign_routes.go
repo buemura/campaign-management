@@ -14,5 +14,8 @@ func setupCampaignRoutes(e *echo.Echo) {
 	createUsecase := usecases.NewCampaignCreateUsecase(repo)
 	campaingController := controllers.NewCampaignController(*createUsecase)
 
+	e.GET("/campaign", campaingController.Create)
 	e.POST("/campaign", campaingController.Create)
+	e.PUT("/campaign/:id", campaingController.Create)
+	e.DELETE("/campaign/:id", campaingController.Create)
 }

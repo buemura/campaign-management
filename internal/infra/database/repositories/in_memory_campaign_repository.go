@@ -31,3 +31,14 @@ func (r *inMemoryCampaignRepository) Save(camp *campaign.Campaign) (*campaign.Ca
 	r.db = append(r.db, camp)
 	return camp, nil
 }
+
+func (r *inMemoryCampaignRepository) Delete(id string) error {
+	// var camp *campaign.Campaign
+	for _, c := range r.db {
+		if c.ID == id {
+			// camp = c
+			break
+		}
+	}
+	return nil
+}
