@@ -13,7 +13,11 @@ func NewCampaignCreateUsecase(campaignRepository campaign.CampaignRepository) *C
 }
 
 func (u *CampaignCreateUsecase) Execute(input campaign.CampaignCrate) (*campaign.Campaign, error) {
-	newCampaign := campaign.NewCampaign(input)
+	newCampaign, err := campaign.NewCampaign(input)
+	if err != nil {
+		return nil, err
+	}
+
 	c, err := u.campaignRepository.Save(newCampaign)
 	if err != nil {
 		return nil, err
