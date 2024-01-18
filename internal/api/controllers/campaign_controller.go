@@ -75,5 +75,5 @@ func (cc *CampaignController) Delete(c echo.Context) error {
 	if err := cc.campaignDeleteUsecase.Execute(id); err != nil {
 		return helpers.BuildErrorResponse(c, err.Error())
 	}
-	return c.JSON(http.StatusOK, nil)
+	return c.NoContent(http.StatusNoContent)
 }

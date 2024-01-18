@@ -9,6 +9,7 @@ import (
 
 var errorsMap = map[string]int{
 	"BAD_REQUEST": http.StatusBadRequest,
+	"NOT_FOUND":   http.StatusNotFound,
 }
 
 func BuildErrorResponse(c echo.Context, errMsg string) error {

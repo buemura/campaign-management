@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"errors"
+
 	"github.com/bemura/campaign-management/internal/domain/campaign"
 )
 
@@ -42,12 +44,18 @@ func (r *inMemoryCampaignRepository) Save(camp *campaign.Campaign) (*campaign.Ca
 }
 
 func (r *inMemoryCampaignRepository) Delete(id string) error {
-	// var camp *campaign.Campaign
-	for _, c := range r.db {
+	index := -1
+	for i, c := range r.db {
 		if c.ID == id {
-			// camp = c
+			index = i
 			break
 		}
 	}
+
+	if index == -1 {
+		return errors.New("NOT_FOUND: campaign not found")
+	}
+
+	r.db = append(r.db[:index], r.db[index+1:]...)
 	return nil
 }
