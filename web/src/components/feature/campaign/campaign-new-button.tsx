@@ -9,8 +9,6 @@ export function CampaignNewButton() {
   const [showNewModal, setShowNewModal] = useState(false);
 
   const handleNewCampaign = async () => {
-    console.log(enabled);
-
     const res = await createCampaign({
       name,
       status: enabled ? CampaignStatusEnum.ENABLED : CampaignStatusEnum.PAUSED,
@@ -18,7 +16,7 @@ export function CampaignNewButton() {
     if (!res) {
       alert("Unable to create campaign");
     }
-    // location.reload();
+    location.reload();
   };
 
   return (

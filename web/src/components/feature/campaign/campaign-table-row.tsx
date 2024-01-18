@@ -13,8 +13,6 @@ export const CampaignTableRow = (campaign: ICampaign) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleUpdateCampaign = async () => {
-    console.log(enabled);
-
     const res = await updateCampaignById({
       id: campaign.id,
       name,
@@ -23,7 +21,7 @@ export const CampaignTableRow = (campaign: ICampaign) => {
     if (!res) {
       alert("Unable to create campaign");
     }
-    // location.reload();
+    location.reload();
   };
 
   const handleDeleteCampaign = async () => {

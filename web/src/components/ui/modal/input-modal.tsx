@@ -58,6 +58,7 @@ export function InputModal({
                     type={i.inputType}
                     onChange={(e) => i.setValue(e.target.value)}
                     defaultValue={i.value ?? ""}
+                    defaultChecked={i.value ?? ""}
                   />
                 </div>
               ))}
