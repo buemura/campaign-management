@@ -25,8 +25,8 @@ export const CampaignTableRow = (campaign: ICampaign) => {
   };
 
   const handleDeleteCampaign = async () => {
-    const res = await deleteCampaignById(campaign.id);
-    if (!res) {
+    const isSuccess = await deleteCampaignById(campaign.id);
+    if (!isSuccess) {
       alert("Unable to delete campaign");
     }
     location.reload();

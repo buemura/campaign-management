@@ -20,8 +20,7 @@ export async function getCampaignList(): Promise<ICampaign[] | null> {
     const { data } = await axios.get<ICampaign[]>(apiUrl);
     return data;
   } catch (error) {
-    // console.log(error);
-    // throw error;
+    console.log(error);
     return null;
   }
 }
@@ -33,8 +32,7 @@ export async function createCampaign(
     const { data } = await axios.post<ICampaign>(apiUrl, body);
     return data;
   } catch (error) {
-    // console.log(error);
-    // throw error;
+    console.log(error);
     return null;
   }
 }
@@ -46,21 +44,19 @@ export async function updateCampaignById(
     const { data } = await axios.put<ICampaign>(`${apiUrl}/${props.id}`, props);
     return data;
   } catch (error) {
-    // console.log(error);
-    // throw error;
+    console.log(error);
     return null;
   }
 }
 
 export async function deleteCampaignById(
   id: string
-): Promise<ICampaign | null> {
+): Promise<ICampaign | boolean> {
   try {
-    const { data } = await axios.delete<ICampaign>(`${apiUrl}/${id}`);
-    return data;
+    await axios.delete<ICampaign>(`${apiUrl}/${id}`);
+    return true;
   } catch (error) {
-    // console.log(error);
-    // throw error;
-    return null;
+    console.log(error);
+    return false;
   }
 }
