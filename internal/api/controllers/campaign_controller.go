@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/bemura/campaign-management/internal/api/helpers"
@@ -31,6 +32,7 @@ func NewCampaignController(
 }
 
 func (cc *CampaignController) Create(c echo.Context) error {
+	slog.Info("[CampaignController][Create] - Creating campaign")
 	input := new(campaign.CampaignCrate)
 	if err := c.Bind(input); err != nil {
 		return helpers.BuildErrorResponse(c, err.Error())
@@ -44,6 +46,7 @@ func (cc *CampaignController) Create(c echo.Context) error {
 }
 
 func (cc *CampaignController) Get(c echo.Context) error {
+	slog.Info("[CampaignController][Get] - Getting campaigns")
 	res, err := cc.campaignGetAllUsecase.Execute()
 	if err != nil {
 		return helpers.BuildErrorResponse(c, err.Error())
@@ -52,6 +55,7 @@ func (cc *CampaignController) Get(c echo.Context) error {
 }
 
 func (cc *CampaignController) Update(c echo.Context) error {
+	slog.Info("[CampaignController][Update] - Updating campaign")
 	input := new(campaign.CampaignUpdate)
 	if err := c.Bind(input); err != nil {
 		return helpers.BuildErrorResponse(c, err.Error())
@@ -66,6 +70,7 @@ func (cc *CampaignController) Update(c echo.Context) error {
 }
 
 func (cc *CampaignController) Delete(c echo.Context) error {
+	slog.Info("[CampaignController][Delete] - Deleting campaign")
 	id := c.Param("id")
 	if err := cc.campaignDeleteUsecase.Execute(id); err != nil {
 		return helpers.BuildErrorResponse(c, err.Error())

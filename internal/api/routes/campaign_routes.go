@@ -22,8 +22,8 @@ func setupCampaignRoutes(e *echo.Echo) {
 		*deleteUsecase,
 	)
 
-	e.POST("/campaign", campaingController.Create)
-	e.GET("/campaign", campaingController.Get)
-	e.PUT("/campaign/:id", campaingController.Update)
-	e.DELETE("/campaign/:id", campaingController.Delete)
+	e.POST("/api/campaign", campaingController.Create)
+	e.GET("/api/campaign", campaingController.Get)
+	e.PUT("/api/campaign/:id", campaingController.Update)
+	e.DELETE("/api/campaign/:id", campaingController.Delete)
 }
