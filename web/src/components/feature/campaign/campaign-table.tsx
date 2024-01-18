@@ -1,7 +1,7 @@
 import { ICampaign } from "../../../types";
 import { CampaignTableRow } from "./campaign-table-row";
 
-const tableHeader = ["Id", "Name", "Status", "Created At"];
+const tableHeader = ["Id", "Name", "Status", "Created At", "Action"];
 
 type CampaignTableProps = {
   campaigns: ICampaign[];
@@ -9,7 +9,7 @@ type CampaignTableProps = {
 
 export const CampaignTable = ({ campaigns }: CampaignTableProps) => {
   return (
-    <div className="flex flex-col bg-white">
+    <div className="flex flex-col bg-white shadow-md border border-neutral-300">
       <div className="-m-1.5 overflow-x-auto">
         <div className="p-1.5 min-w-full inline-block align-middle">
           <div className="overflow-hidden">
@@ -20,7 +20,7 @@ export const CampaignTable = ({ campaigns }: CampaignTableProps) => {
                     <th
                       key={h}
                       scope="col"
-                      className="px-6 py-3 text-start text-lg font-medium text-neutral-800"
+                      className="px-6 py-3 text-start text-lg font-medium text-neutral-800 bg-neutral-200"
                     >
                       {h}
                     </th>

@@ -51,15 +51,12 @@ export function InputModal({
             {/*body*/}
             <div className="relative p-6 flex-auto">
               {modalInputs.map((i) => (
-                <div className="flex flex-col items-start my-4 text-neutral-800 text-lg leading-relaxed">
+                <div
+                  key={i.label}
+                  className="flex flex-col items-start my-4 text-neutral-800 text-lg leading-relaxed"
+                >
                   <label>{i.label}</label>
-                  <input
-                    className="p-1 border border-neutral-300 rounded-sm outline-none"
-                    type={i.inputType}
-                    onChange={(e) => i.setValue(e.target.value)}
-                    defaultValue={i.value ?? ""}
-                    defaultChecked={i.value ?? ""}
-                  />
+                  <Input {...i} />
                 </div>
               ))}
             </div>
@@ -88,3 +85,25 @@ export function InputModal({
     </>
   );
 }
+
+const Input = (props: InputProps) => {
+  if (props.inputType === "checkbox") {
+    return (
+      <input
+        className="p-1 border border-neutral-300 rounded-sm outline-none cursor-pointer"
+        type={props.inputType}
+        onChange={(e) => props.setValue(e.target.checked)}
+        defaultChecked={props.value}
+      />
+    );
+  }
+
+  return (
+    <input
+      className="p-1 border border-neutral-300 rounded-sm outline-none"
+      type={props.inputType}
+      onChange={(e) => props.setValue(e.target.value)}
+      defaultValue={props.value}
+    />
+  );
+};
