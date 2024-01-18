@@ -11,11 +11,22 @@ import (
 
 type CampaignController struct {
 	campaignCreateUsecase usecases.CampaignCreateUsecase
+	campaignGetAllUsecase usecases.CampaignGetAllUsecase
+	campaignUpdateUsecase usecases.CampaignUpdateUsecase
+	campaignDeleteUsecase usecases.CampaignDeleteUsecase
 }
 
-func NewCampaignController(campaignCreateUsecase usecases.CampaignCreateUsecase) *CampaignController {
+func NewCampaignController(
+	campaignCreateUsecase usecases.CampaignCreateUsecase,
+	campaignGetAllUsecase usecases.CampaignGetAllUsecase,
+	campaignUpdateUsecase usecases.CampaignUpdateUsecase,
+	campaignDeleteUsecase usecases.CampaignDeleteUsecase,
+) *CampaignController {
 	return &CampaignController{
 		campaignCreateUsecase: campaignCreateUsecase,
+		campaignGetAllUsecase: campaignGetAllUsecase,
+		campaignUpdateUsecase: campaignUpdateUsecase,
+		campaignDeleteUsecase: campaignDeleteUsecase,
 	}
 }
 
@@ -29,5 +40,35 @@ func (cc *CampaignController) Create(c echo.Context) error {
 	if err != nil {
 		return helpers.BuildErrorResponse(c, err.Error())
 	}
+	return c.JSON(http.StatusCreated, res)
+}
+
+func (cc *CampaignController) Get(c echo.Context) error {
+	res, err := cc.campaignGetAllUsecase.Execute()
+	if err != nil {
+		return helpers.BuildErrorResponse(c, err.Error())
+	}
 	return c.JSON(http.StatusOK, res)
+}
+
+func (cc *CampaignController) Update(c echo.Context) error {
+	input := new(campaign.CampaignUpdate)
+	if err := c.Bind(input); err != nil {
+		return helpers.BuildErrorResponse(c, err.Error())
+	}
+
+	input.ID = c.Param("id")
+	res, err := cc.campaignUpdateUsecase.Execute(*input)
+	if err != nil {
+		return helpers.BuildErrorResponse(c, err.Error())
+	}
+	return c.JSON(http.StatusOK, res)
+}
+
+func (cc *CampaignController) Delete(c echo.Context) error {
+	id := c.Param("id")
+	if err := cc.campaignDeleteUsecase.Execute(id); err != nil {
+		return helpers.BuildErrorResponse(c, err.Error())
+	}
+	return c.JSON(http.StatusOK, nil)
 }

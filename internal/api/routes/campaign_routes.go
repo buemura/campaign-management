@@ -12,10 +12,18 @@ func setupCampaignRoutes(e *echo.Echo) {
 	var camp []*campaign.Campaign
 	repo := repositories.NewInMemoryCampaignRepository(camp)
 	createUsecase := usecases.NewCampaignCreateUsecase(repo)
-	campaingController := controllers.NewCampaignController(*createUsecase)
+	getAllUsecase := usecases.NewCampaignGetAllUsecase(repo)
+	updateUsecase := usecases.NewCampaignUpdateUsecase(repo)
+	deleteUsecase := usecases.NewCampaignDeleteUsecase(repo)
+	campaingController := controllers.NewCampaignController(
+		*createUsecase,
+		*getAllUsecase,
+		*updateUsecase,
+		*deleteUsecase,
+	)
 
-	e.GET("/campaign", campaingController.Create)
 	e.POST("/campaign", campaingController.Create)
-	e.PUT("/campaign/:id", campaingController.Create)
-	e.DELETE("/campaign/:id", campaingController.Create)
+	e.GET("/campaign", campaingController.Get)
+	e.PUT("/campaign/:id", campaingController.Update)
+	e.DELETE("/campaign/:id", campaingController.Delete)
 }

@@ -1,6 +1,8 @@
 package repositories
 
-import "github.com/bemura/campaign-management/internal/domain/campaign"
+import (
+	"github.com/bemura/campaign-management/internal/domain/campaign"
+)
 
 type inMemoryCampaignRepository struct {
 	db []*campaign.Campaign
@@ -28,6 +30,13 @@ func (r *inMemoryCampaignRepository) FindById(id string) (*campaign.Campaign, er
 }
 
 func (r *inMemoryCampaignRepository) Save(camp *campaign.Campaign) (*campaign.Campaign, error) {
+	for i, existingCamp := range r.db {
+		if existingCamp.ID == camp.ID {
+			r.db[i] = camp
+			return camp, nil
+		}
+	}
+
 	r.db = append(r.db, camp)
 	return camp, nil
 }

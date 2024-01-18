@@ -1,6 +1,10 @@
 package usecases
 
-import "github.com/bemura/campaign-management/internal/domain/campaign"
+import (
+	"errors"
+
+	"github.com/bemura/campaign-management/internal/domain/campaign"
+)
 
 type CampaignUpdateUsecase struct {
 	campaignRepository campaign.CampaignRepository
@@ -17,6 +21,9 @@ func (u *CampaignUpdateUsecase) Execute(input campaign.CampaignUpdate) (*campaig
 	if err != nil {
 		return nil, err
 	}
+	if c == nil {
+		return nil, errors.New("NOT_FOUND: campaign not found")
+	}
 
 	if updateCampaignFields(c, input) {
 		savedCampaign, err := u.campaignRepository.Save(c)
@@ -32,11 +39,12 @@ func (u *CampaignUpdateUsecase) Execute(input campaign.CampaignUpdate) (*campaig
 func updateCampaignFields(c *campaign.Campaign, input campaign.CampaignUpdate) bool {
 	changed := false
 
-	if input.Name != nil && *input.Name != c.Name {
+	if input.Name != nil {
 		c.Name = *input.Name
 		changed = true
 	}
-	if input.Status != nil && *input.Status != c.Status {
+
+	if input.Status != nil {
 		c.Status = *input.Status
 		changed = true
 	}

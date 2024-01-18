@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -14,7 +13,6 @@ var errorsMap = map[string]int{
 
 func BuildErrorResponse(c echo.Context, errMsg string) error {
 	for key, statusCode := range errorsMap {
-		fmt.Println(key, statusCode, errMsg)
 		if strings.Contains(errMsg, key) {
 			return c.JSON(statusCode, map[string]any{
 				"error": errMsg,
